@@ -1,7 +1,9 @@
 package br.com.wandeilson.services;
 
-import br.com.wandeilson.data.dto.PersonDTO;
+import br.com.wandeilson.data.dtov1.PersonDTO;
+import br.com.wandeilson.data.dtov2.PersonDTOV2;
 import br.com.wandeilson.exceptions.ResourceNotFoundException;
+import br.com.wandeilson.mapper.custom.PersonMapper;
 import br.com.wandeilson.models.Person;
 import br.com.wandeilson.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -23,6 +25,8 @@ public class PersonService {
 
     @Autowired
     private PersonRepository repository;
+    @Autowired
+    private PersonMapper converter;
 
     public List<PersonDTO> findAll(){
         logger.info("Finding all People.");
@@ -39,12 +43,30 @@ public class PersonService {
         return parseObject(entity, PersonDTO.class);
     }
 
+    public PersonDTO findByIdv2(Long id){
+        logger.info("Finding one Person.");
+
+        Person entity = repository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("No records found for this ID"));
+
+        return parseObject(entity, PersonDTO.class);
+    }
+
     public PersonDTO create (PersonDTO dto){
         logger.info("Creating one Person.");
 
         Person entity = parseObject(dto,Person.class);
 
         return parseObject(repository.save(entity),PersonDTO.class);
+
+    }
+
+    public PersonDTOV2 createV2 (PersonDTOV2 dto){
+        logger.info("Creating one Person V2");
+
+        Person entity = converter.convertDTOToEntity(dto);
+
+        return converter.convertEntityToDTO(repository.save(entity));
 
     }
 

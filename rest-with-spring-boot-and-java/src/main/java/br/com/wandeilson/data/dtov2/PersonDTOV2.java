@@ -1,8 +1,9 @@
-package br.com.wandeilson.data.dto;
+package br.com.wandeilson.data.dtov2;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class PersonDTO implements Serializable {
+public class PersonDTOV2 implements Serializable {
 
     private Long id;
 
@@ -13,6 +14,16 @@ public class PersonDTO implements Serializable {
     private String address;
 
     private String gender;
+
+    private Date birthDay;
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
 
     public Long getId() {
         return id;
@@ -54,12 +65,13 @@ public class PersonDTO implements Serializable {
         this.firstName = firstName;
     }
 
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersonDTO personDTO)) return false;
+        if (!(o instanceof PersonDTOV2 that)) return false;
 
-        return getId().equals(personDTO.getId()) && getFirstName().equals(personDTO.getFirstName()) && getLastName().equals(personDTO.getLastName()) && getAddress().equals(personDTO.getAddress()) && getGender().equals(personDTO.getGender());
+        return getId().equals(that.getId()) && getFirstName().equals(that.getFirstName()) && getLastName().equals(that.getLastName()) && getAddress().equals(that.getAddress()) && getGender().equals(that.getGender()) && getBirthDay().equals(that.getBirthDay());
     }
 
     @Override
@@ -69,6 +81,7 @@ public class PersonDTO implements Serializable {
         result = 31 * result + getLastName().hashCode();
         result = 31 * result + getAddress().hashCode();
         result = 31 * result + getGender().hashCode();
+        result = 31 * result + getBirthDay().hashCode();
         return result;
     }
 }

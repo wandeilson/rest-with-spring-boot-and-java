@@ -1,7 +1,7 @@
 package br.com.wandeilson.controllers;
 
-import br.com.wandeilson.data.dto.PersonDTO;
-import br.com.wandeilson.models.Person;
+import br.com.wandeilson.data.dtov1.PersonDTO;
+import br.com.wandeilson.data.dtov2.PersonDTOV2;
 import br.com.wandeilson.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -41,6 +41,13 @@ public class PersonController {
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDTO update(@RequestBody PersonDTO person){
         return service.update(person);
+    }
+
+
+    //SEGUNDA VERSAO
+    @PostMapping(value = "/v2", produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDTOV2 create(@RequestBody PersonDTOV2 person){
+        return service.createV2(person);
     }
 
 }
