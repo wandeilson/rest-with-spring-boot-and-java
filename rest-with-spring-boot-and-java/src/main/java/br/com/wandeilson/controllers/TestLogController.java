@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.slf4j.Logger;
 
-@RestController
+@RestController("/api/test/v1")
 public class TestLogController {
 
     private Logger logger = LoggerFactory.getLogger(TestLogController.class.getName());
